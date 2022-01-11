@@ -1,3 +1,4 @@
+from _typeshed import Self
 import math
 import random
 class rsa:
@@ -8,6 +9,7 @@ class rsa:
         self.euler =0
         self.e = 0
         self.d = 0
+        self.m = ""
     def encryto(self,pri_pass):
         self.p = genPrime(1000,10000)
         self.q = genPrime(1000,10000)
@@ -17,8 +19,8 @@ class rsa:
         self.euler = (self.p -1)*(self.q - 1)
         self.e =  int(Arbitrary_Int_e(self.euler))
         self.d = int(extend_euclid(self.e,self.euler))
-        m = self.encryto_withE(pri_pass,self.e,self.n)
-        return m,self.e,self.d
+        self.m = self.encryto_withE(pri_pass,self.e,self.n)
+        return self.m,self.e,self.d
     
     def encryto_withE(self,private_pass,e,n):
         m =""
@@ -26,6 +28,11 @@ class rsa:
             t = pow(ord(i),e,n)
             m += str(t); 
         return m
+
+    #11.01.2001
+    def isTrue(self,psw):
+        psw_en = self.encryto_withE(psw,self.e,self.n)
+        return psw_en == self.m
     
 def Arbitrary_Int_e(phi):
     e = random.randint(1,phi)
@@ -70,6 +77,7 @@ def extend_euclid(e, n) :
         xe += tn
 
     return xe
+
 
 def main():
     rs = rsa()
