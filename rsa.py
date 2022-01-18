@@ -1,4 +1,3 @@
-from _typeshed import Self
 import math
 import random
 class rsa:
@@ -87,5 +86,4 @@ def main():
     print(e)
     print(d)
 
-main()
 
