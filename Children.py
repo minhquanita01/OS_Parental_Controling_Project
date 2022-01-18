@@ -1,5 +1,6 @@
 #from _typeshed import Self
 import math
+from os import times
 import random
 class rsa:
     def __init__(self):
@@ -84,12 +85,27 @@ class Time:
         self._minute = 0
 
 class Using_Time:
-    def __init__(self):
-        self._from = "00:00"
-        self._to = "00:00"
-        self._duration = 0
-        self._interrupt = 0
-        self._sum = 0
+    def __init__(self,f,t,d,i,s):
+        self._from = f
+        self._to = t
+        self._duration = d
+        self._interrupt = i
+        self._sum = s
+
+def data_split(data:str):
+    from_ = ""
+    to_ = ""
+    duration_ = 0
+    interrupt_ = 0
+    sum_ = 0
+    d = data.split()
+    for s in d:
+        if(s[0] == 'F'): from_ = str(s[1:])
+        elif(s[0] == 'T'): to_ = s[1:]
+        elif(s[0] == 'D'): duration_ = int(s[1:])
+        elif(s[0] == 'I'): interrupt_ = int(s[1:])
+        elif(s[0] == 'S'): sum_ = int(s[1:])
+    return from_, to_, duration_,interrupt_, sum_
 
 def main():
 
@@ -101,8 +117,12 @@ def main():
     c_rs = rsa()
     c_rs.encryto(children_pass)
 
-    time_file = open("time.txt")
-    
+    time_process = []
+    with open("time.txt", encoding = 'utf-8') as f:
+        for s_line in f:
+            f,t,d,i,s = data_split(s_line)           
+            ti = Using_Time(f,t,d,i,s)
+            time_process.append(ti)
 
     pass_input = input("Nhap mat khau: ")
 
@@ -113,6 +133,3 @@ def main():
             print("Dung mat khau con tre")
         else:
             print("Sai mat khau")
-    
-
-main()
