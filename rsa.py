@@ -1,5 +1,7 @@
 import math
 import random
+
+# mật mã mã hoá mật khẩu rsa
 class rsa:
     def __init__(self):
         self.p = 0
@@ -9,6 +11,8 @@ class rsa:
         self.e = 0
         self.d = 0
         self.m = ""
+
+    #encryto with no key public
     def encryto(self,pri_pass):
         self.p = genPrime(1000,10000)
         self.q = genPrime(1000,10000)
@@ -21,6 +25,7 @@ class rsa:
         self.m = self.encryto_withE(pri_pass,self.e,self.n)
         return self.m,self.e,self.d
     
+    #encryto with key public
     def encryto_withE(self,private_pass,e,n):
         m =""
         for i in private_pass:
@@ -28,11 +33,12 @@ class rsa:
             m += str(t); 
         return m
 
-    #11.01.2001
+    #check_pass with psw
     def isTrue(self,psw):
         psw_en = self.encryto_withE(psw,self.e,self.n)
         return psw_en == self.m
-    
+
+#find modulo e
 def Arbitrary_Int_e(phi):
     e = random.randint(1,phi)
     if(int(gcd(e, phi)) == 1):
@@ -85,5 +91,6 @@ def main():
     print(psw_en)
     print(e)
     print(d)
+    pass
 
 
