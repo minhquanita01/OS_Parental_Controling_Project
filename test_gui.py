@@ -1,5 +1,4 @@
 from functools import partial
-import imp
 from tkinter import *
 from tkinter import messagebox
 import rsa
