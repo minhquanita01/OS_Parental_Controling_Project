@@ -1,24 +1,26 @@
 from functools import partial
+import imp
 from tkinter import *
 from tkinter import messagebox
 import rsa
 import math
 import random
-
+import os
 
 def validate_password(password_field):
+    input = str(password_field.get())
+    
+    if (len(input) == 0):
+        messagebox.showwarning("Thông báo", "Chưa nhập mật khẩu")
+        return
+
     data = rsa.readFileKey("key.txt")
-    print(data)
-    print(int(data[0]))
     keypulic = int(data[1])
     n = int(data[0])
     psw_c = int(data[2])
     psw_p = int(data[3])
 
-    input = str(password_field.get())
-    print(input)
     psw_en = int(rsa.rsa.encryto_withE(input,keypulic,n))
-    print(psw_en)
 
     if (psw_en == psw_p):
         messagebox.showinfo("Thông báo", "Nhập đúng mật khẩu phụ huynh")
@@ -27,6 +29,9 @@ def validate_password(password_field):
     else:
         messagebox.showerror("Thông báo", "Nhập sai mật khẩu")
 
+def shutdown():
+    if (messagebox.askyesno("Thông báo", "Bạn thật sự muốn tắt máy?")):
+        os.system("shutdown -s -t 300")
 
 root = Tk()
 root.title("Đăng nhập hệ thống")
@@ -44,6 +49,9 @@ validate = partial(validate_password, passwordEntry)
 
 Submit_Button = Button(root, text="OK", width=12, command=validate)
 Submit_Button.pack()
+
+Shutdown_Button = Button(root, text="Tắt máy", width=12, command=shutdown)
+Shutdown_Button.pack()
 
 
 root.mainloop()
