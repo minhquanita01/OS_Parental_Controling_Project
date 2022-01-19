@@ -14,7 +14,7 @@ child = False
 parent = False
 more = False
 
-def validate_password(password_field):
+def validate_password(window, password_field):
 
     input = str(password_field.get())
     timeList = ch.read_file("time.txt")
@@ -25,7 +25,6 @@ def validate_password(password_field):
     for t in timeList:
         if t.isTimeUsing():
             a = t
-            print(a)
             break
         
     if (len(input) == 0):
@@ -56,9 +55,9 @@ def validate_password(password_field):
 
 def shutdown():
     if (messagebox.askyesno("Thông báo", "Bạn thật sự muốn tắt máy?")):
-        os.system("shutdown -s -t 300")
+        os.system("shutdown -s -t 15")
 def forceShutDown():
-    os.system("shutdown -s -t 300")
+    os.system("shutdown -s -t 15")
 root = Tk()
 root.title("Đăng nhập hệ thống")
 root.eval("tk::PlaceWindow . center")
@@ -78,14 +77,11 @@ Submit_Button.pack()
 
 Shutdown_Button = Button(root, text="Tắt máy", width=12, command=shutdown)
 Shutdown_Button.pack()
-start = time.time()
-
 
 def parentTime(st):
     root.destroy()    
     if int(st.countTimeUsing()) == 0:
         # nhập lại mật khẩu
-        print("oke")
         root2 = Tk()
         root2.title("Đăng nhập lại hệ thống")
         root2.eval("tk::PlaceWindow . center")
