@@ -71,33 +71,18 @@ Shutdown_Button.pack()
 
 
 root.mainloop()
+
 def parentTime(timeList):
     if not parent : return
+    root.destroy()
     for t in timeList:
         if int(t.countTimeUsing()) == 60:
             # nhập lại mật khẩu
-            root = Tk()
-            root.title("Nhập lại mật khẩu")
-            root.eval("tk::PlaceWindow . center")
-            root.resizable(0,0)
-
-            Input_Label = Label(root, text = "Nhập mật khẩu")
-            Input_Label.pack()
-
-            password = StringVar()
-            passwordEntry = Entry(root, textvariable=password, width=50, show='*')
-            passwordEntry.pack()
-
-            validate = partial(validate_password, passwordEntry)
-
-            Submit_Button = Button(root, text="OK", width=12, command=validate)
-            Submit_Button.pack()
-
-            Shutdown_Button = Button(root, text="Tắt máy", width=12, command=shutdown)
-            Shutdown_Button.pack()
+            pass
 
 def childTime(timeList):
     if not child : return
+    root.destroy()
     for t in timeList:
         if t.isTimeUsing() : 
             # tới thời gian duration
@@ -110,10 +95,10 @@ def childTime(timeList):
 
 
 while(True):
-    ust = us.Using_Time()
     timeList = ch.read_file("time.txt")
     if child : childTime(timeList)
-    elif parent : parentTime(timeList)
+    while parent : parentTime(timeList)
+    break
 
     
 
