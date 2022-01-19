@@ -14,11 +14,20 @@ child = False
 parent = False
 more = False
 
-
 def validate_password(password_field):
 
     input = str(password_field.get())
-    
+    timeList = ch.read_file("time.txt")
+    for t in timeList:
+        t.setNow_isUsing()
+
+    a = 0
+    for t in timeList:
+        if t.isTimeUsing():
+            a = t
+            print(a)
+            break
+        
     if (len(input) == 0):
         messagebox.showwarning("Thông báo", "Chưa nhập mật khẩu")
         return
@@ -33,13 +42,14 @@ def validate_password(password_field):
     psw_en = int(rsa.rsa.encryto_withE(input,keypulic,n))
 
     if (psw_en == psw_p):
-        parent = True
         messagebox.showinfo("Thông báo", "Nhập đúng mật khẩu phụ huynh")
+        st = us.Using_Time("00:00","00:00")
+        st.setNow_isUsing()     
+        parentTime(st)
     elif (psw_en == psw_c):
-        child = True
         messagebox.showinfo("Thông báo", "Nhập đúng mật khẩu con trẻ")
+        childTime(a)
     elif (psw_en == psw_m):
-        more = False
         messagebox.showinfo("Thông báo", "Nhập đúng mật khẩu thêm thời gian")    
     else:
         messagebox.showerror("Thông báo", "Nhập sai mật khẩu")
@@ -68,37 +78,42 @@ Submit_Button.pack()
 
 Shutdown_Button = Button(root, text="Tắt máy", width=12, command=shutdown)
 Shutdown_Button.pack()
+start = time.time()
 
+
+def parentTime(st):
+    root.destroy()    
+    if int(st.countTimeUsing()) == 0:
+        # nhập lại mật khẩu
+        print("oke")
+        root2 = Tk()
+        root2.title("Đăng nhập lại hệ thống")
+        root2.eval("tk::PlaceWindow . center")
+        root2.resizable(0,0)
+        Input_Label2 = Label(root2, text = "Nhập mật khẩu")
+        Input_Label2.pack()
+        password2 = StringVar()
+        passwordEntry2 = Entry(root2, textvariable=password2, width=60, show='*')
+        passwordEntry2.pack()
+        validate2 = partial(validate_password, passwordEntry2)
+        Submit_Button2 = Button(root2, text="OK", width=12, command=validate2)
+        Submit_Button2.pack()
+        root2.mainloop()
+        pass
+    else : 
+        time.sleep(30)
+        parentTime(st)
+
+def childTime(ti):
+    root.destroy()
+    if ti.isEnd_UsingTime() :
+        forceShutDown()
+    if int(ti.getDuration()) == int(ti.countTimeUsing()):
+        # deadlock for time sleep
+        time.sleep(int(ti.getTimeSleep())*60)
+            
 
 root.mainloop()
-
-def parentTime(timeList):
-    if not parent : return
-    root.destroy()
-    for t in timeList:
-        if int(t.countTimeUsing()) == 60:
-            # nhập lại mật khẩu
-            pass
-
-def childTime(timeList):
-    if not child : return
-    root.destroy()
-    for t in timeList:
-        if t.isTimeUsing() : 
-            # tới thời gian duration
-            if int(t.getDuration()) == int(t.countTimeUsing()):
-                # deadlock for time sleep
-                time.sleep(int(t.getTimeSleep())*60)
-
-        if t.isEnd_UsingTime() :
-            forceShutDown()
-
-
-while(True):
-    timeList = ch.read_file("time.txt")
-    if child : childTime(timeList)
-    while parent : parentTime(timeList)
-    break
 
     
 
