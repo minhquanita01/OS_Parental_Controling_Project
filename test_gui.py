@@ -76,8 +76,30 @@ def parentTime(timeList):
     if not parent : return
     root.destroy()
     for t in timeList:
-        if int(t.countTimeUsing()) == 60:
+        if int(t.countTimeUsing()) == 1:
             # nhập lại mật khẩu
+            root2 = Tk()
+
+            root2.title("Đăng nhập lại hệ thống")
+            root2.eval("tk::PlaceWindow . center")
+            root2.resizable(0,0)
+
+            Input_Label2 = Label(root, text = "Nhập mật khẩu")
+            Input_Label2.pack()
+
+            password2 = StringVar()
+            passwordEntry2 = Entry(root, textvariable=password2, width=60, show='*')
+            passwordEntry2.pack()
+
+            validate2 = partial(validate_password, passwordEntry2)
+
+            Submit_Button2 = Button(root, text="OK", width=12, command=validate)
+            Submit_Button2.pack()
+
+            root2.mainloop()
+
+            print("OK")
+
             pass
 
 def childTime(timeList):
