@@ -1,5 +1,8 @@
 import math
 import random
+from tkinter import E
+
+# mật mã mã hoá mật khẩu rsa
 class rsa:
     def __init__(self):
         self.p = 0
@@ -9,6 +12,8 @@ class rsa:
         self.e = 0
         self.d = 0
         self.m = ""
+
+    #encryto with no key public
     def encryto(self,pri_pass):
         self.p = genPrime(1000,10000)
         self.q = genPrime(1000,10000)
@@ -21,18 +26,22 @@ class rsa:
         self.m = self.encryto_withE(pri_pass,self.e,self.n)
         return self.m,self.e,self.d
     
-    def encryto_withE(self,private_pass,e,n):
+    #encryto with key public
+    @staticmethod
+    def encryto_withE(private_pass,e,n):
         m =""
         for i in private_pass:
             t = pow(ord(i),e,n)
             m += str(t); 
         return m
 
-    #11.01.2001
-    def isTrue(self,psw):
-        psw_en = self.encryto_withE(psw,self.e,self.n)
-        return psw_en == self.m
-    
+    #check_pass with psw
+    @staticmethod
+    def isTrue(psw1,psw2,keyPublic,n):
+        psw_en = rsa.encryto_withE(psw1,keyPublic,n)
+        return psw_en == psw2
+
+#find modulo e
 def Arbitrary_Int_e(phi):
     e = random.randint(1,phi)
     if(int(gcd(e, phi)) == 1):
@@ -77,13 +86,30 @@ def extend_euclid(e, n) :
 
     return xe
 
+def writeFileKey(namefile, data):
+    file1 = open(namefile, "w")
+    file1.writelines(data)
+    file1.close()
 
-def main():
-    rs = rsa()
-    psw = "aaaa"
-    psw_en,e,d = rs.encryto(psw)
-    print(psw_en)
-    print(e)
-    print(d)
+def readFileKey(namefile):
+    file1 = open(namefile, "r")
+    d = file1.readlines()
+    return d
+
+#delete when run first time
+# def main():
+#     c_rs = rsa()
+#     psw ="0123"
+#     pswp ="8541"
+#     psw_c,e,d = c_rs.encryto(psw)
+#     psw_p = c_rs.encryto_withE(pswp,e,c_rs.n)
+#     print(psw_c)
+#     print(psw_p)
+#     L = []
+#     L.append(str(c_rs.n) + "\n")
+#     L.append(str(e) + "\n")
+#     L.append(psw_c + '\n')
+#     L.append(psw_p + '\n') 
+#     writeFileKey("key.txt",L)
 
 

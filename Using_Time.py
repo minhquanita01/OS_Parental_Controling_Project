@@ -1,6 +1,8 @@
 from datetime import time 
 from datetime import datetime
 import math
+
+#return minute : "07:00 - 06:00 = 60 "
 def subtractTimeString(s1,s2):
     FMT = '%H:%M'
     return (datetime.strptime(s1, FMT) - datetime.strptime(s2, FMT)).total_seconds()/60
@@ -27,18 +29,20 @@ class Using_Time:
             return True
         return False
 
+    # set current is the start time
     def setNow_isUsing(self):
         crt = getTimeNow()
         self._time_start = crt
 
+    # count minute from start time
     def countTimeUsing(self):
         crt = getTimeNow()
         return subtractTimeString(crt,self._time_start)
 
     # function for debug
-    def countTimeUsing2(self,time):
-        crt = getTimeNow()
-        return subtractTimeString(crt,time)
+    # def countTimeUsing2(self,time):
+    #     crt = getTimeNow()
+    #     return subtractTimeString(crt,time)
 
     def isEnd_UsingTime(self):
         if self.isTimeUsing():
