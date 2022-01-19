@@ -97,28 +97,22 @@ def readFileKey(namefile):
     return d
 
 #delete when run first time
-def main():
-    c_rs = rsa()
-    psw ="1234"
-    pswp ="8541"
-    psw = "1458"
-    psw_c,e,n = c_rs.encryto(psw)
-    psw_p = c_rs.encryto_withE(pswp,e,c_rs.n)
-    psw_m = c_rs.encryto_withE(pswp,e,c_rs.n)
-    a = rsa.encryto_withE(psw,e,n)
-    b = rsa.encryto_withE(pswp,e,n)
-    print(a)
-    print(b)
-    print(psw_c)
-    print(psw_p)
-    L = []
-    L.append(str(n) + "\n")
-    L.append(str(e) + "\n")
-    L.append(psw_c + '\n')
-    L.append(psw_p + '\n')
-    L.append(psw_m + '\n')
-    writeFileKey("key.txt",L)
+# def main():
+#     c_rs = rsa()
+#     psw ="1234"
+#     pswp ="8541"
+#     pswm = "1458"
+#     psw_c,e,n = c_rs.encryto(psw)
+#     psw_p = c_rs.encryto_withE(pswp,e,c_rs.n)
+#     psw_m = c_rs.encryto_withE(pswm,e,c_rs.n)
+#     L = []
+#     L.append(str(n) + "\n")
+#     L.append(str(e) + "\n")
+#     L.append(psw_c + '\n')
+#     L.append(psw_p + '\n')
+#     L.append(psw_m + '\n')
+#     writeFileKey("key.txt",L)
 
-main()
+# main()
 
 
