@@ -16,9 +16,7 @@ def validate_password(password_field):
     psw_p = int(data[3])
 
     input = str(password_field.get())
-    print(input)
     psw_en = int(rsa.rsa.encryto_withE(input,keypulic,n))
-    print(psw_en)
 
     if (psw_en == psw_p):
         messagebox.showinfo("Thông báo", "Nhập đúng mật khẩu phụ huynh")

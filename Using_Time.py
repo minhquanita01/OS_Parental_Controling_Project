@@ -37,7 +37,7 @@ class Using_Time:
     # count minute from start time
     def countTimeUsing(self):
         crt = getTimeNow()
-        return subtractTimeString(crt,self._time_start)
+        return int(subtractTimeString(crt,self._time_start))
 
     # function for debug
     # def countTimeUsing2(self,time):
