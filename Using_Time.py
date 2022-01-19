@@ -60,6 +60,7 @@ class Using_Time:
     def getSum(self):
         return self._sum
 
+
 a = Using_Time("06:00","06:45")
 a.setNow_isUsing()
 c = a.countTimeUsing()
