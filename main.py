@@ -42,6 +42,7 @@ def validate_password(window, password_field):
 
     if (psw_en == psw_p):
         messagebox.showinfo("Thông báo", "Nhập đúng mật khẩu phụ huynh")
+        window.destroy()
         st = us.Using_Time("00:00","00:00")
         st.setNow_isUsing()     
         parentTime(st)
@@ -70,7 +71,7 @@ password = StringVar()
 passwordEntry = Entry(root, textvariable=password, width=50, show='*')
 passwordEntry.pack()
 
-validate = partial(validate_password, passwordEntry)
+validate = partial(validate_password, root, passwordEntry)
 
 Submit_Button = Button(root, text="OK", width=12, command=validate)
 Submit_Button.pack()
@@ -78,8 +79,7 @@ Submit_Button.pack()
 Shutdown_Button = Button(root, text="Tắt máy", width=12, command=shutdown)
 Shutdown_Button.pack()
 
-def parentTime(st):
-    root.destroy()    
+def parentTime(st):    
     if int(st.countTimeUsing()) == 0:
         # nhập lại mật khẩu
         root2 = Tk()
@@ -91,7 +91,7 @@ def parentTime(st):
         password2 = StringVar()
         passwordEntry2 = Entry(root2, textvariable=password2, width=60, show='*')
         passwordEntry2.pack()
-        validate2 = partial(validate_password, passwordEntry2)
+        validate2 = partial(validate_password, root2, passwordEntry2)
         Submit_Button2 = Button(root2, text="OK", width=12, command=validate2)
         Submit_Button2.pack()
         root2.mainloop()
@@ -110,11 +110,3 @@ def childTime(ti):
             
 
 root.mainloop()
-    
-
-
-
-    
-        
-
-
