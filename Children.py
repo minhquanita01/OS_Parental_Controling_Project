@@ -28,20 +28,28 @@ def read_file(file_name):
     return time_list
 
 def main():
-    # parent_pass = "taolabomay"
-    # p_rs = rsa.rsa()
-    # p_rs.encryto(parent_pass)
+    data = rsa.readFileKey("key.txt")
+    print(data)
+    print(int(data[0]))
+    keypulic = int(data[0])
+    n = int(data[1])
+    psw_c = int(data[2])
+    psw_p = int(data[3])
 
-    # children_pass = "123456"
-    # c_rs = rsa.rsa()
-    # c_rs.encryto(children_pass)
-    # pass_input = input("Nhap mat khau: ")
+    print("input password : ")
+    psw = input()
+    psw_en = rsa.rsa.encryto_withE(psw_e)
+    if ():
+        print("Dung mat khau phu huynh")
+    else:
+        if (c_rs.isTrue(pass_input)):
+            print("Dung mat khau con tre")
+        else:
+            print("Sai mat khau")
 
-    # if (p_rs.isTrue(pass_input)):
-    #     print("Dung mat khau phu huynh")
-    # else:
-    #     if (c_rs.isTrue(pass_input)):
-    #         print("Dung mat khau con tre")
-    #     else:
-            # print("Sai mat khau")
+    print("input password : ")
+    psw = input()
+    
     pass
+
+main()
