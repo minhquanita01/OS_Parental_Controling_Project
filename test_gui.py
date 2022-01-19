@@ -114,7 +114,6 @@ def childTime(ti):
             
 
 root.mainloop()
-
     
 
 
