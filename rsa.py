@@ -24,7 +24,7 @@ class rsa:
         self.e =  int(Arbitrary_Int_e(self.euler))
         self.d = int(extend_euclid(self.e,self.euler))
         self.m = self.encryto_withE(pri_pass,self.e,self.n)
-        return self.m,self.e,self.d
+        return self.m,self.e,self.n
     
     #encryto with key public
     @staticmethod
@@ -97,19 +97,25 @@ def readFileKey(namefile):
     return d
 
 #delete when run first time
-# def main():
-#     c_rs = rsa()
-#     psw ="0123"
-#     pswp ="8541"
-#     psw_c,e,d = c_rs.encryto(psw)
-#     psw_p = c_rs.encryto_withE(pswp,e,c_rs.n)
-#     print(psw_c)
-#     print(psw_p)
-#     L = []
-#     L.append(str(c_rs.n) + "\n")
-#     L.append(str(e) + "\n")
-#     L.append(psw_c + '\n')
-#     L.append(psw_p + '\n') 
-#     writeFileKey("key.txt",L)
+def main():
+    c_rs = rsa()
+    psw ="1234"
+    pswp ="8541"
+    psw_c,e,n = c_rs.encryto(psw)
+    psw_p = c_rs.encryto_withE(pswp,e,c_rs.n)
+    a = rsa.encryto_withE(psw,e,n)
+    b = rsa.encryto_withE(pswp,e,n)
+    print(a)
+    print(b)
+    print(psw_c)
+    print(psw_p)
+    L = []
+    L.append(str(n) + "\n")
+    L.append(str(e) + "\n")
+    L.append(psw_c + '\n')
+    L.append(psw_p + '\n') 
+    writeFileKey("key.txt",L)
+
+main()
 
 
