@@ -7,6 +7,13 @@ def subtractTimeString(s1,s2):
     FMT = '%H:%M'
     return (datetime.strptime(s1, FMT) - datetime.strptime(s2, FMT)).total_seconds()/60
 
+def addTimeString(s1,s2):
+    FMT = '%H:%M'
+    t1 = datetime.strptime(s1, FMT)
+    t2 = datetime.strptime(s2, FMT)
+    time_zero = datetime.strptime('00:00', FMT)
+    return str((t1 - time_zero + t2).time())
+
 def getTimeNow():
     FMT = '%H:%M'
     current_time = datetime.now()
@@ -61,7 +68,7 @@ class Using_Time:
         return self._sum
 
 
-a = Using_Time("06:00","06:45")
-a.setNow_isUsing()
-c = a.countTimeUsing()
-print(c)
+# a = Using_Time("06:00","06:45")
+# a.setNow_isUsing()
+# c = a.countTimeUsing()
+# print(c)

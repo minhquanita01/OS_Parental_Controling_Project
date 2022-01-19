@@ -1,4 +1,5 @@
 from functools import partial
+import time
 from tkinter import *
 from tkinter import messagebox
 import Using_Time as us
@@ -46,7 +47,8 @@ def validate_password(password_field):
 def shutdown():
     if (messagebox.askyesno("Thông báo", "Bạn thật sự muốn tắt máy?")):
         os.system("shutdown -s -t 300")
-
+def forceShutDown():
+    os.system("shutdown -s -t 300")
 root = Tk()
 root.title("Đăng nhập hệ thống")
 root.eval("tk::PlaceWindow . center")
@@ -69,23 +71,55 @@ Shutdown_Button.pack()
 
 
 root.mainloop()
+def parentTime(timeList):
+    if not parent : return
+    for t in timeList:
+        if int(t.countTimeUsing()) == 60:
+            # nhập lại mật khẩu
+            root = Tk()
+            root.title("Nhập lại mật khẩu")
+            root.eval("tk::PlaceWindow . center")
+            root.resizable(0,0)
+
+            Input_Label = Label(root, text = "Nhập mật khẩu")
+            Input_Label.pack()
+
+            password = StringVar()
+            passwordEntry = Entry(root, textvariable=password, width=50, show='*')
+            passwordEntry.pack()
+
+            validate = partial(validate_password, passwordEntry)
+
+            Submit_Button = Button(root, text="OK", width=12, command=validate)
+            Submit_Button.pack()
+
+            Shutdown_Button = Button(root, text="Tắt máy", width=12, command=shutdown)
+            Shutdown_Button.pack()
+
+def childTime(timeList):
+    if not child : return
+    for t in timeList:
+        if t.isTimeUsing() : 
+            # tới thời gian duration
+            if int(t.getDuration()) == int(t.countTimeUsing()):
+                # deadlock for time sleep
+                time.sleep(int(t.getTimeSleep())*60)
+
+        if t.isEnd_UsingTime() :
+            forceShutDown()
+
 
 while(True):
-    if parent:
-        ust = us.Using_Time()
-        timeList = ch.read_file("time.txt")
-        timU = False
-        for t in timeList:
-            t.setNow_isUsing()
-            if t.isTimeUsing() : timU = True
+    ust = us.Using_Time()
+    timeList = ch.read_file("time.txt")
+    if child : childTime(timeList)
+    elif parent : parentTime(timeList)
 
-        if timU :
-            #do
-            pass
-        else:
-            messagebox.showerror("Thông báo", "Chưa tới giờ sử dụng")
+    
 
-        
+
+
+    
         
 
 
